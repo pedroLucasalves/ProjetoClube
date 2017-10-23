@@ -227,7 +227,6 @@ public class TipoAssociado_Cadastro extends javax.swing.JInternalFrame {
             tela03.setVisible(true);
             
             this.dispose();
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

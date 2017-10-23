@@ -7,8 +7,11 @@ package Apresentação;
 
 
 import entidade.Associado;
+import entidade.TipoAssociado;
+import java.util.Vector;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import negocio.NAssociado;
 
 /**
@@ -16,12 +19,14 @@ import negocio.NAssociado;
  * @author Pedro
  */
 public class Associado_Pesquisa extends javax.swing.JInternalFrame {
+    
     JDesktopPane jDesktopPanePrincipal;
     /**
      * Creates new form Associado_Pesquisa
      */
     public Associado_Pesquisa() {
         initComponents();
+        preencherTela();
     }
     public Associado_Pesquisa(JDesktopPane jDesktopPanePrincipal){
         this();
@@ -106,6 +111,7 @@ public class Associado_Pesquisa extends javax.swing.JInternalFrame {
             Associado_Cadastro tela04 = new Associado_Cadastro(jDesktopPanePrincipal, asso);
             
             jDesktopPanePrincipal.add(tela04);
+            tela04.setVisible(true);
             this.dispose();
             
         } catch (Exception e) {
@@ -122,8 +128,33 @@ public class Associado_Pesquisa extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
     public void preencherTela(){
         try {
+            //criando  o cabecalho da tabela
+            Vector<String> cabecalho = new Vector();
+            cabecalho.add("Identificador");
+            cabecalho.add("Nome");
+            cabecalho.add("Cpf");
+            cabecalho.add("Rg");
+            cabecalho.add("Telefone");
+            cabecalho.add("Endereço");
+            cabecalho.add("TipoAssociado");
+            
+            Vector detalhes = new Vector();
+            for(Associado detalhe : new NAssociado().listar()){
+                //criando  linha da tabela
+                Vector<String> linha = new Vector();
+                linha.add(detalhe.getCodigo() + "");
+                linha.add(detalhe.getNome());
+                linha.add(detalhe.getCpf());
+                linha.add(detalhe.getRg());
+                linha.add(detalhe.getFone() + "");
+                linha.add(detalhe.getEndereco());
+                linha.add(detalhe.getTipoAssociado().getDescricao() + "");
+                detalhes.add(linha);
+            }
+            jTablePesquisar.setModel(new DefaultTableModel(detalhes, cabecalho));
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 }

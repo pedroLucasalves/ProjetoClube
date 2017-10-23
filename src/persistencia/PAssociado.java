@@ -100,7 +100,7 @@ public class PAssociado {
         
     }
     public Associado consultar(int codigo)throws SQLException{
-        String sq1 = "SELECT * FROM associado ORDER BY codigo;";
+        String sq1 = "SELECT * FROM associado WHERE codigo =?;";
         Connection cnn = util.Conexao.getConexao();
         PreparedStatement psd = cnn.prepareStatement(sq1);
         
@@ -116,7 +116,8 @@ public class PAssociado {
             objeto.setCpf(rs.getString("cpf"));
             objeto.setRg(rs.getString("rg"));
             objeto.setFone(rs.getInt("fone"));
-            
+            objeto.setEndereco(rs.getString("endereco"));
+            objeto.setTipoAssociado(new PTipoAssociado().consultar(rs.getInt("cod_tipoassociado")));
             
         }
         rs.close();
