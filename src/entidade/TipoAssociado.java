@@ -11,6 +11,17 @@ package entidade;
  */
 public class TipoAssociado {
 
+    public TipoAssociado() {
+    }
+
+    
+    
+    public TipoAssociado(int codigo, String descricao) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+    }
+    
+    
     private int codigo;
     private String descricao;
     private double valorMensalidade;
@@ -39,4 +50,10 @@ public class TipoAssociado {
         this.valorMensalidade = valorMensalidade;
     }
 
+    @Override
+    public String toString(){
+        return this.descricao;
+    }
+    
+    
 }

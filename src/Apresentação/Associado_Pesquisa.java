@@ -5,30 +5,28 @@
  */
 package Apresentação;
 
-import entidade.TipoAssociado;
-import java.util.Vector;
+
+import entidade.Associado;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import negocio.NTipoAssociado;
+import negocio.NAssociado;
 
 /**
  *
  * @author Pedro
  */
-public class TipoAssociado_Pesquisa extends javax.swing.JInternalFrame {
-    JDesktopPane jDesktoPanePrincipal;
+public class Associado_Pesquisa extends javax.swing.JInternalFrame {
+    JDesktopPane jDesktopPanePrincipal;
     /**
-     * Creates new form TipoAssociado_Pesquisa
+     * Creates new form Associado_Pesquisa
      */
-    public TipoAssociado_Pesquisa() {
+    public Associado_Pesquisa() {
         initComponents();
-        preencherTabela();
     }
-    public TipoAssociado_Pesquisa(JDesktopPane jDesktopPanePrincipal){
+    public Associado_Pesquisa(JDesktopPane jDesktopPanePrincipal){
         this();
         
-        this.jDesktoPanePrincipal = jDesktopPanePrincipal;
+        this.jDesktopPanePrincipal = jDesktopPanePrincipal;
     }
 
     /**
@@ -40,18 +38,9 @@ public class TipoAssociado_Pesquisa extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButtonFechar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePesquisar = new javax.swing.JTable();
-
-        setTitle("´Pesquisa Tipo Associado");
-
-        jButtonFechar.setText("Fechar");
-        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonFecharActionPerformed(evt);
-            }
-        });
+        jButtonFechar = new javax.swing.JButton();
 
         jTablePesquisar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,21 +60,28 @@ public class TipoAssociado_Pesquisa extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jTablePesquisar);
 
+        jButtonFechar.setText("Fechar");
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jButtonFechar)
-                .addContainerGap())
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jButtonFechar)
                 .addContainerGap())
         );
@@ -104,50 +100,30 @@ public class TipoAssociado_Pesquisa extends javax.swing.JInternalFrame {
     private void jTablePesquisarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePesquisarMousePressed
         try {
             int linha = jTablePesquisar.getSelectedRow();
-            String codigo = jTablePesquisar.getValueAt(linha, 0).toString();
+            String codigo = jTablePesquisar.getValueAt(linha,0).toString();
             
-            TipoAssociado tipo = new NTipoAssociado().consultar(Integer.parseInt(codigo));
+            Associado asso = new NAssociado().consultar(Integer.parseInt(codigo));
+            Associado_Cadastro tela04 = new Associado_Cadastro(jDesktopPanePrincipal, asso);
             
-            TipoAssociado_Cadastro  tela02 = new TipoAssociado_Cadastro(jDesktoPanePrincipal, tipo);
-            
-            jDesktoPanePrincipal.add(tela02);
-            tela02.setVisible(true);
-            
+            jDesktopPanePrincipal.add(tela04);
             this.dispose();
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_jTablePesquisarMousePressed
 
+     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTablePesquisar;
     // End of variables declaration//GEN-END:variables
-
-    private void preencherTabela() {
+    public void preencherTela(){
         try {
-            //Cria o cabeçalho da tabela
-            Vector<String> cabecalho = new Vector();
-            cabecalho.add("Identeficador");
-            cabecalho.add("Descrição");
-            cabecalho.add("Valor Mensalidade");
             
-            Vector detalhes = new Vector();
-            
-            for(TipoAssociado detalhe : new NTipoAssociado().listar()){
-                //criando linha da tabela
-                Vector<String> linha = new Vector();
-                linha.add(detalhe.getCodigo() + "");
-                linha.add(detalhe.getDescricao());
-                linha.add(detalhe.getValorMensalidade() + "");
-                
-                detalhes.add(linha);
-            }
-           jTablePesquisar.setModel(new DefaultTableModel(detalhes, cabecalho));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-          }
+    }
 }

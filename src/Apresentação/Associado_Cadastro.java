@@ -6,8 +6,10 @@
 package Apresentação;
 
 import entidade.Associado;
+import entidade.TipoAssociado;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import negocio.NTipoAssociado;
 import persistencia.PAssociado;
 
 /**
@@ -36,12 +38,16 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
 
         preencherTela(asso);
     }
-    
 
-    
     private void carregarCombo() {
         try {
-            PAssociado item0 = new PAssociado(0, "selencione...");
+            TipoAssociado item0 = new TipoAssociado(0, "Selecione...");
+
+            cmbTipoAssociado.addItem(item0);
+
+            for (TipoAssociado item : new NTipoAssociado().listar()) {
+                cmbTipoAssociado.addItem(item);
+            }
 
         } catch (Exception e) {
         }
@@ -74,8 +80,8 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
         jButtonExcluir = new javax.swing.JButton();
         jButtonLimpar = new javax.swing.JButton();
         jButtonFechar = new javax.swing.JButton();
-        jComboBoxTipoAssociado = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        cmbTipoAssociado = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -86,8 +92,18 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
         jTextFieldId.setEditable(false);
 
         jButtonConsultar.setText("Consultar");
+        jButtonConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConsultarActionPerformed(evt);
+            }
+        });
 
         jButtonPesquisar.setText("Pesquisar");
+        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome");
 
@@ -106,14 +122,32 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
         jLabel6.setText("Endereço");
 
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonLimpar.setText("Limpar");
+        jButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimparActionPerformed(evt);
+            }
+        });
 
         jButtonFechar.setText("Fechar");
-
-        jComboBoxTipoAssociado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Tipo Associado");
 
@@ -140,7 +174,6 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
                         .addComponent(jButtonLimpar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonFechar))
-                    .addComponent(jComboBoxTipoAssociado, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -156,7 +189,8 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldRg)))
+                        .addComponent(jTextFieldRg))
+                    .addComponent(cmbTipoAssociado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,9 +223,9 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
                     .addComponent(jTextFieldEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxTipoAssociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7)
+                    .addComponent(cmbTipoAssociado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonSalvar)
                     .addComponent(jButtonExcluir)
@@ -207,15 +241,65 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCpfActionPerformed
 
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        try {
+            Associado asso = new Associado();
+            asso.setNome(jTextFieldNome.getText());
+            asso.setCpf(jTextFieldCpf.getText());
+            asso.setRg(jTextFieldRg.getText());
+            asso.setFone(Integer.parseInt(jTextFieldTelefone.getText()));
+            asso.setEndereco(jTextFieldEndereco.getText());
+            asso.setTipoAssociado((TipoAssociado)cmbTipoAssociado.getSelectedItem());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        try {
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparActionPerformed
+        try {
+            limparTela();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonLimparActionPerformed
+
+    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonFecharActionPerformed
+
+    private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonConsultarActionPerformed
+
+    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
+        try {
+            Associado_Pesquisa tela04 = new Associado_Pesquisa();
+            jDesktopPanePrincipal.add(tela04);
+            tela04.setVisible(true);
+
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonPesquisarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox cmbTipoAssociado;
     private javax.swing.JButton jButtonConsultar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonLimpar;
     private javax.swing.JButton jButtonPesquisar;
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JComboBox<String> jComboBoxTipoAssociado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -233,27 +317,38 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
 
     private void preencherTela(Associado asso) {
         try {
-             jTextFieldId.setText(asso.getCodigo() + "");
-             jTextFieldNome.setText(asso.getNome());
-             jTextFieldCpf.setText(asso.getCpf());
-             jTextFieldRg.setText(asso.getRg());
-             jTextFieldTelefone.setText(asso.getFone()+ "");
-             jTextFieldEndereco.setText(asso.getEndereco());
-             //jComboBoxTipoAssociado
-             jButtonExcluir.setEnabled(true);
-     
+            jTextFieldId.setText(asso.getCodigo() + "");
+            jTextFieldNome.setText(asso.getNome());
+            jTextFieldCpf.setText(asso.getCpf());
+            jTextFieldRg.setText(asso.getRg());
+            jTextFieldTelefone.setText(asso.getFone() + "");
+            jTextFieldEndereco.setText(asso.getEndereco());
+            jButtonExcluir.setEnabled(true);
+            
+            for (int i = 0; i < cmbTipoAssociado.getModel().getSize(); i++) {
+                
+                TipoAssociado tipo = (TipoAssociado)cmbTipoAssociado.getModel().getElementAt(i);
+                if(tipo.getCodigo() == asso.getTipoAssociado().getCodigo()){
+                    cmbTipoAssociado.setSelectedIndex(i);
+                }
+                
+            }
+            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
     private void limparTela() {
-        //jTextFieldIdentificador.setText("");
-        // jTextFieldDescrição.setText("");
-        // jTextFieldValorMensalidade.setText("");
-
+        jTextFieldId.setText("");
+        jTextFieldNome.setText("");
+        jTextFieldCpf.setText("");
+        jTextFieldRg.setText("");
+        jTextFieldTelefone.setText("");
+        jTextFieldEndereco.setText("");
         jButtonExcluir.setEnabled(false);
 
-        //jTextFieldDescrição.requestFocus();
+        jTextFieldId.requestFocus();
     }
 }
