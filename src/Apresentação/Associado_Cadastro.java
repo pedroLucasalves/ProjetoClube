@@ -247,15 +247,28 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
         try {
             //pegando dados do associado
             Associado asso = new Associado();
-            asso.setNome(jTextFieldNome.getText());
+            asso.setNome(jTextFieldNome.getText().toUpperCase());
             asso.setCpf(jTextFieldCpf.getText());
             asso.setRg(jTextFieldRg.getText());
-            asso.setFone(Integer.parseInt(jTextFieldTelefone.getText()));
+            try {
+                asso.setFone(Integer.parseInt(jTextFieldTelefone.getText()));
+            } catch (Exception ex) {
+                throw new Exception("Digite um telefone valido");
+            }
             asso.setEndereco(jTextFieldEndereco.getText());
-            asso.setTipoAssociado((TipoAssociado) cmbTipoAssociado.getSelectedItem());
+            if (cmbTipoAssociado.getSelectedIndex() > 0) {
+                asso.setTipoAssociado((TipoAssociado) cmbTipoAssociado.getSelectedItem());
+            } else {
+                throw new Exception("Selecione um tipo de associado");
+            }
+            //comparando os Ids
+            if (!jTextFieldId.getText().isEmpty()) {
+                asso.setCodigo(Integer.parseInt(jTextFieldId.getText()));
+            }
             //salvando dados do associado
             NAssociado negocio = new NAssociado();
             negocio.salvar(asso);
+
             JOptionPane.showMessageDialog(rootPane, " Associado salvo com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -264,12 +277,12 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         try {
-            int resposta = JOptionPane.showConfirmDialog(null,"confirmar a exclusao do Associado?,",
-                                            "Sistema clube", JOptionPane.YES_OPTION);
-            if(resposta == JOptionPane.YES_OPTION){
+            int resposta = JOptionPane.showConfirmDialog(null, "confirmar a exclusao do Associado?,",
+                    "Sistema clube", JOptionPane.YES_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
                 NAssociado negocio = new NAssociado();
                 negocio.excluir(Integer.parseInt(jTextFieldId.getText()));
-                JOptionPane.showMessageDialog(null,"Operação efeituda com sucesso");
+                JOptionPane.showMessageDialog(null, "Operação efeituda com sucesso");
                 limparTela();
             }
         } catch (Exception e) {
@@ -291,7 +304,7 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
 
     private void jButtonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarActionPerformed
         try {
-           
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButtonConsultarActionPerformed
@@ -366,6 +379,7 @@ public class Associado_Cadastro extends javax.swing.JInternalFrame {
         jTextFieldEndereco.setText("");
         cmbTipoAssociado.setSelectedItem("");
         jButtonExcluir.setEnabled(false);
+        cmbTipoAssociado.setSelectedIndex(0);
 
         jTextFieldId.requestFocus();
     }

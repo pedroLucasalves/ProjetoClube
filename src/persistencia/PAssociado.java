@@ -79,7 +79,8 @@ public class PAssociado {
         psd.setInt(6, parametro.getTipoAssociado().getCodigo());
         psd.setInt(7, parametro.getCodigo());
         
-
+        psd.execute();
+        
         psd.close();
         cnn.close();
        

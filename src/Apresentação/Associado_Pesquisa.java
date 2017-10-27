@@ -76,11 +76,11 @@ public class Associado_Pesquisa extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(295, 494, Short.MAX_VALUE)
                 .addComponent(jButtonFechar)
                 .addGap(25, 25, 25))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +154,7 @@ public class Associado_Pesquisa extends javax.swing.JInternalFrame {
             jTablePesquisar.setModel(new DefaultTableModel(detalhes, cabecalho));
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
     }
 }
