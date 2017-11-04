@@ -5,7 +5,6 @@
  */
 package persistencia;
 
-import com.sun.corba.se.spi.logging.CORBALogDomains;
 import entidade.TipoAssociado;
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -54,11 +53,12 @@ public class PTipoAssociado {
 
         Connection cnn = util.Conexao.getConexao();
         PreparedStatement psd = cnn.prepareStatement(sql);
-
-        psd.setInt(1, parametro.getCodigo());
+        
+        psd.setString(1, parametro.getDescricao());
         psd.setDouble(2, parametro.getValorMensalidade());
-        psd.setString(3, parametro.getDescricao());
-
+        psd.setInt(3, parametro.getCodigo());
+        
+        psd.execute();
         cnn.close();
         psd.close();
     }
@@ -70,7 +70,6 @@ public class PTipoAssociado {
         PreparedStatement psd = cnn.prepareStatement(sql);
 
         psd.setInt(1, codigo);
-       
 
         psd.execute();
 

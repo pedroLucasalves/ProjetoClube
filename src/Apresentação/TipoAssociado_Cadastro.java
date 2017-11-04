@@ -181,6 +181,7 @@ public class TipoAssociado_Cadastro extends javax.swing.JInternalFrame {
             }
             NTipoAssociado negocio = new NTipoAssociado();
             negocio.salvar(tipoAssociado);
+            JOptionPane.showMessageDialog(null,"Tipo associado salvo com sucesso!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Operação efetuada com" + "sucesso");
         }
