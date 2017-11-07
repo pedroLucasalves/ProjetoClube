@@ -44,7 +44,7 @@ public class TipoAssociado_Pesquisa extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePesquisar = new javax.swing.JTable();
 
-        setTitle("´Pesquisa Tipo Associado");
+        setTitle("Pesquisa Tipo Associado");
 
         jButtonFechar.setText("Fechar");
         jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
