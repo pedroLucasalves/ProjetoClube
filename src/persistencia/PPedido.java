@@ -25,16 +25,16 @@ public class PPedido {
 
             Connection cnn = util.Conexao.getConexao();
             String sq1 = "INSERT INTO pedido"
-                    + "(valortotal, datahorapedido) VALUES"
-                    + "(?,?);";
+                    + "SET datahorapedido = now(),"
+                    + "valortotal = ? WHERE = ?;";
             PreparedStatement ps = cnn.prepareStatement(sq1);
 
             ps.setDouble(1, parametro.getValorTotal());
-            //ps.setDate(2,parametro.getDataHoraPedido());
+            ps.setDate(2, (Date) parametro.getDataHoraPedido());
 
             ps.execute();
 
-            String sq2 = "SELECT currval('') as codigo;";
+            String sq2 = "SELECT currval('identificador') as codigo;";
 
             Statement stm = cnn.createStatement();
             ResultSet rs = stm.executeQuery(sq2);
@@ -59,7 +59,7 @@ public class PPedido {
         PreparedStatement psd = cnn.prepareStatement(sq1);
 
         psd.setDouble(1, (double) parametro.getValorTotal());
-        //psd.setDate(2, (Date) parametro, Calendar.getInstance());
+        psd.setDate(2, (Date) parametro.getDataHoraPedido());
     }
 
     public void excluir(int codigo) throws SQLException {
